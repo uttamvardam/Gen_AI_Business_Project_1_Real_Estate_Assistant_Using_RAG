@@ -1,0 +1,6 @@
+[server]
+headless = true
+fileWatcherType = "none"
+folderWatchBlacklist = ["resources", ".venv"]
+enableCORS = false
+enableXsrfProtection = false
