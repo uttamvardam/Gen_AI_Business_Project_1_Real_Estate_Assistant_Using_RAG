@@ -84,15 +84,17 @@ The application will open in your browser.
 
 The following articles can be used to explore the tool's capabilities:
 
-- [How the Federal Reserve's rate policy affects mortgages — CNBC](https://www.cnbc.com/2024/12/21/how-the-federal-reserves-rate-policy-affects-mortgages.html)
-- [Why mortgage rates jumped despite Fed interest rate cut — CNBC](https://www.cnbc.com/2024/12/20/why-mortgage-rates-jumped-despite-fed-interest-rate-cut.html)
-- [Wall Street sees upside in 2025 for these dividend-paying real estate stocks — CNBC](https://www.cnbc.com/2024/12/17/wall-street-sees-upside-in-2025-for-these-dividend-paying-real-estate-stocks.html)
+- [Even more borrowers choose riskier mortgages, as higher interest rates crush affordability — CNBC](https://www.cnbc.com/2026/10/14/even-more-borrowers-choose-riskier-mortgages-as-higher-interest-rates-crush-affordability.html)
+
+- [Refinance demand is now half what it was a year ago, as mortgage rates rise again — CNBC ](https://www.cnbc.com/2026/10/07/mortgage-rates-sit-at-nearly-3-year-high-and-demand-continues-to-shrink.html)
+
+- [Fannie Mae sharply raises mortgage rate forecast for 2027 — CNBC](https://www.cnbc.com/2026/10/14/fannie-mae-sharply-raises-mortgage-rate-forecast-for-2027-.html)
 
 After processing the articles, try questions such as:
 
-- How do Federal Reserve rate decisions affect mortgage rates?
-- Why can mortgage rates rise even after an interest rate cut?
-- What factors influence real estate stock performance?
+- What was the average contract interest rate for 30-year fixed-rate mortgages on October 7 and October 14?
+- What was the ARM share of mortgage demand on October 14, and how does it compare with October 7?
+- How did Fannie Mae's 2027 mortgage-rate forecast change from its previous forecast?
 
 ## How It Works
 
