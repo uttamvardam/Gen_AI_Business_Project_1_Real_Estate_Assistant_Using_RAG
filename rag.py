@@ -72,12 +72,52 @@ def process_urls(urls):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
-    loader = UnstructuredURLLoader(urls=urls, headers=headers)
-    data = loader.load()
+
+    data = []
+    loaded_urls = set()
+
+    # 1. Primary loader: UnstructuredURLLoader
+    try:
+        loader = UnstructuredURLLoader(urls=urls, headers=headers)
+        raw_docs = loader.load()
+        for doc in raw_docs:
+            if doc and doc.page_content and doc.page_content.strip():
+                data.append(doc)
+                src = doc.metadata.get("source") if doc.metadata else None
+                if src:
+                    loaded_urls.add(src)
+    except Exception:
+        # Fallback will handle missing URLs
+        pass
+
+    # 2. Resilient fallback: requests + BeautifulSoup for any URLs not loaded
+    missing_urls = [u for u in urls if u not in loaded_urls]
+    if missing_urls:
+        import requests
+        from bs4 import BeautifulSoup
+        from langchain_core.documents import Document
+
+        for u in missing_urls:
+            try:
+                resp = requests.get(u, headers=headers, timeout=20)
+                if resp.status_code == 200:
+                    soup = BeautifulSoup(resp.content, "html.parser")
+                    for el in soup(["script", "style", "nav", "footer", "header", "aside"]):
+                        el.extract()
+                    main_body = soup.find("article") or soup.find("main") or soup.body
+                    text = main_body.get_text(separator="\n") if main_body else soup.get_text(separator="\n")
+                    clean_lines = [line.strip() for line in text.splitlines() if line.strip()]
+                    clean_text = "\n".join(clean_lines)
+                    if clean_text:
+                        data.append(Document(page_content=clean_text, metadata={"source": u}))
+            except Exception:
+                pass
 
     if not data:
-        yield "Warning: Could not fetch content from the provided URLs."
-        return
+        raise RuntimeError(
+            "Could not fetch or parse any content from the provided URLs. "
+            "Please verify that the URLs are valid and accessible."
+        )
 
     yield f"Splitting text from {len(data)} page(s) into chunks..."
     text_splitter = RecursiveCharacterTextSplitter(
@@ -87,8 +127,7 @@ def process_urls(urls):
     docs = text_splitter.split_documents(data)
 
     if not docs:
-        yield "Warning: No text chunks found to index."
-        return
+        raise RuntimeError("No text chunks found to index from the fetched pages.")
 
     yield f"Embedding and adding {len(docs)} chunks to vector database..."
     uuids = [str(uuid4()) for _ in range(len(docs))]
