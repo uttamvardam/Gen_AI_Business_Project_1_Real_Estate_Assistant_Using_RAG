@@ -26,6 +26,8 @@ load_dotenv()
 CHUNK_SIZE = 1000
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 VECTORSTORE_DIR = Path(__file__).parent / "resources/vectorstore"
+VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
+
 COLLECTION_NAME = "real_estate"
 
 llm = None
@@ -92,7 +94,9 @@ def process_urls(urls):
     uuids = [str(uuid4()) for _ in range(len(docs))]
     vector_store.add_documents(docs, ids=uuids)
 
-    yield f"Successfully processed and added {len(docs)} chunks to vector database!"
+    count = vector_store._collection.count()
+
+    yield f"Successfully processed {len(docs)} chunks. Vector database now contains {count} chunks."
 
 # Patch ChatGroq._combine_llm_outputs at runtime for robustness against NoneType token details
 def _safe_combine_llm_outputs(self, llm_outputs):
