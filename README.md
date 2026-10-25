@@ -1,6 +1,10 @@
 # 🏙️ **RealEstate Research Tool**
 ![product screenshot](resources/Picture1.png)
 
+### 🚀 Live Demo
+
+Try the application live: [hur2zvsv7smtccwcxmdink.streamlit.app](https://hur2zvsv7smtccwcxmdink.streamlit.app/)
+
 ## Overview
 
 The **Real Estate Research Tool** is a user-friendly, RAG-based application that helps users retrieve relevant information from real estate news articles. Users can provide article URLs, process their content, and ask questions to receive context-aware answers backed by the provided sources.
